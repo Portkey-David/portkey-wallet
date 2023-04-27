@@ -19,6 +19,7 @@ import { useOnManagerAddressAndQueryResult } from 'hooks/useOnManagerAddressAndQ
 import InternalMessage from 'messages/InternalMessage';
 import { PortkeyMessageTypes } from 'messages/InternalMessageTypes';
 import './index.less';
+import { checkReCaptcha } from 'utils/lib/checkReCaptcha';
 
 export default function SelectVerifier() {
   const { verifierMap } = useGuardiansInfo();
@@ -59,7 +60,13 @@ export default function SelectVerifier() {
       if (!selectItem) return message.error('Can not get verification');
 
       setLoading(true);
+
+      const reCaptchaRes = await checkReCaptcha();
+
       const result = await verification.sendVerificationCode({
+        headers: {
+          reCaptchaToken: reCaptchaRes || '',
+        },
         params: {
           guardianIdentifier: loginAccount.guardianAccount.replaceAll(' ', ''),
           type: LoginType[loginAccount.loginType],
@@ -116,7 +123,11 @@ export default function SelectVerifier() {
       );
       const res = await InternalMessage.payload(PortkeyMessageTypes.CHECK_WALLET_STATUS).send();
       if (managerAddress && res.data.privateKey) {
-        onManagerAddressAndQueryResult(res.data.privateKey);
+        onManagerAddressAndQueryResult(res.data.privateKey, {
+          verifierId: selectItem?.id as string,
+          verificationDoc: rst.verificationDoc,
+          signature: rst.signature,
+        });
       } else {
         navigate('/login/set-pin/register');
       }
