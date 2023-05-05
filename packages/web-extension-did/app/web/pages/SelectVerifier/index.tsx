@@ -59,6 +59,7 @@ export default function SelectVerifier() {
       if (!selectItem) return message.error('Can not get verification');
 
       setLoading(true);
+
       const result = await verification.sendVerificationCode({
         params: {
           guardianIdentifier: loginAccount.guardianAccount.replaceAll(' ', ''),
@@ -116,7 +117,11 @@ export default function SelectVerifier() {
       );
       const res = await InternalMessage.payload(PortkeyMessageTypes.CHECK_WALLET_STATUS).send();
       if (managerAddress && res.data.privateKey) {
-        onManagerAddressAndQueryResult(res.data.privateKey);
+        onManagerAddressAndQueryResult(res.data.privateKey, {
+          verifierId: selectItem?.id as string,
+          verificationDoc: rst.verificationDoc,
+          signature: rst.signature,
+        });
       } else {
         navigate('/login/set-pin/register');
       }
