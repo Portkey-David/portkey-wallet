@@ -128,15 +128,15 @@ const TokenDetail: React.FC = () => {
     dispatch(fetchTokenListAsync({ caAddresses: currentWallet.walletInfo.caAddressList || [], caAddressInfos }));
   });
 
-  const isBuyButtonShow = useMemo(
-    () => isMainnet && tokenInfo.symbol === ELF_SYMBOL && tokenInfo.chainId === 'AELF' && isShowBuy,
-    [isMainnet, isShowBuy, tokenInfo.chainId, tokenInfo.symbol],
-  );
+  // const isBuyButtonShow = useMemo(
+  //   () => isMainnet && tokenInfo.symbol === ELF_SYMBOL && tokenInfo.chainId === 'AELF' && isShowBuy,
+  //   [isMainnet, isShowBuy, tokenInfo.chainId, tokenInfo.symbol],
+  // );
 
-  const isFaucetButtonShow = useMemo(
-    () => !isMainnet && tokenInfo.symbol === ELF_SYMBOL && tokenInfo.chainId === 'AELF' && isShowBuy,
-    [isMainnet, isShowBuy, tokenInfo.chainId, tokenInfo.symbol],
-  );
+  // const isFaucetButtonShow = useMemo(
+  //   () => !isMainnet && tokenInfo.symbol === ELF_SYMBOL && tokenInfo.chainId === 'AELF' && isShowBuy,
+  //   [isMainnet, isShowBuy, tokenInfo.chainId, tokenInfo.symbol],
+  // );
 
   return (
     <PageContainer
@@ -165,21 +165,21 @@ const TokenDetail: React.FC = () => {
           )}`}</Text>
         )}
         <View style={styles.buttonGroupWrap}>
-          {isBuyButtonShow && (
+          {/* {isBuyButtonShow && (
             <>
               <BuyButton themeType="innerPage" />
               <View style={styles.spacerStyle} />
             </>
-          )}
+          )} */}
           <SendButton themeType="innerPage" sentToken={currentToken} />
           <View style={styles.spacerStyle} />
           <ReceiveButton currentTokenInfo={currentToken} themeType="innerPage" receiveButton={currentToken} />
-          {isFaucetButtonShow && (
+          {/* {isFaucetButtonShow && (
             <>
               <View style={styles.spacerStyle} />
               <FaucetButton themeType="innerPage" />
             </>
-          )}
+          )} */}
         </View>
       </View>
 

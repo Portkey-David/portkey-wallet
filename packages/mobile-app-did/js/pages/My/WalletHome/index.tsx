@@ -1,6 +1,6 @@
 import PageContainer from 'components/PageContainer';
 import { useLanguage } from 'i18n/hooks';
-import React, { useCallback, useEffect } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { pTd } from 'utils/unit';
 import { ScrollView, View } from 'react-native';
 import CommonButton from 'components/CommonButton';
@@ -20,6 +20,9 @@ import { useAppDispatch } from 'store/hooks';
 import { getWalletNameAsync } from '@portkey-wallet/store/store-ca/wallet/actions';
 import { StyleSheet } from 'react-native';
 import { defaultColors } from 'assets/theme';
+import { TextL } from 'components/CommonText';
+import { useAppCASelector } from '@portkey-wallet/hooks/hooks-ca';
+import { setStringAsync } from 'expo-clipboard';
 
 interface WalletHomeProps {
   name?: string;
@@ -28,6 +31,10 @@ interface WalletHomeProps {
 const WalletHome: React.FC<WalletHomeProps> = () => {
   const { t } = useLanguage();
   const appDispatch = useAppDispatch();
+  const { userId } = useAppCASelector(state => state.wallet);
+
+  const [count, setCount] = useState(0);
+
   const {
     walletAvatar,
     walletName,
@@ -95,6 +102,14 @@ const WalletHome: React.FC<WalletHomeProps> = () => {
             title={t('About Us')}
           />
         </View>
+        <TextL
+          style={{ height: 50 }}
+          onPress={async () => {
+            setCount(count + 1);
+            if (count > 10) await setStringAsync(userId);
+          }}>
+          {(count > 10 && userId) ?? ''}
+        </TextL>
       </ScrollView>
 
       <CommonButton

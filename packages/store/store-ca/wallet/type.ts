@@ -31,4 +31,5 @@ export interface WalletState {
   chainList: ChainItemType[];
   chainInfo?: { [key in NetworkType]?: ChainItemType[] };
   originChainId?: ChainId;
+  userId: string;
 }

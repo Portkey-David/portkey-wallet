@@ -1,6 +1,6 @@
 import React, { useMemo } from 'react';
 import TokenSection from '../TokenSection';
-import NFTSection from '../NFTSection/index';
+// import NFTSection from '../NFTSection/index';
 import CommonTopTab from 'components/CommonTopTab';
 
 import { useLanguage } from 'i18n/hooks';
@@ -17,10 +17,10 @@ const DashBoardTab: React.FC<DashBoardTabProps> = (props: DashBoardTabProps) => 
         name: t('Tokens'),
         tabItemDom: <TokenSection {...props} />,
       },
-      {
-        name: t('NFTs'),
-        tabItemDom: <NFTSection />,
-      },
+      // {
+      //   name: t('NFTs'),
+      //   tabItemDom: <NFTSection />,
+      // },
     ];
   }, [props, t]);
 

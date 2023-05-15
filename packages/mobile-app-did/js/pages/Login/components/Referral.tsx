@@ -20,6 +20,9 @@ import { isIos } from '@portkey-wallet/utils/mobile/device';
 import { useOnLogin } from 'hooks/login';
 import { LoginType } from '@portkey-wallet/types/types-ca/wallet';
 import Loading from 'components/Loading';
+import { useAppCommonDispatch } from '@portkey-wallet/hooks';
+import { setUserId } from '@portkey-wallet/store/store-ca/wallet/slice';
+
 const TitleMap = {
   [PageType.login]: {
     apple: 'Login with Apple',
@@ -42,12 +45,18 @@ export default function Referral({
 }) {
   const { appleSign } = useAppleAuthentication();
   const { googleSign } = useGoogleAuthentication();
+  const dispatch = useAppCommonDispatch();
 
   const onLogin = useOnLogin(type === PageType.login);
   const onAppleSign = useCallback(async () => {
     try {
       Loading.show();
       const userInfo = await appleSign();
+
+      console.log('userId', userInfo?.user?.id);
+
+      dispatch(setUserId(userInfo?.user?.id));
+
       await onLogin({
         loginAccount: userInfo.user.id,
         loginType: LoginType.Apple,
@@ -57,7 +66,7 @@ export default function Referral({
       CommonToast.failError(error);
     }
     Loading.hide();
-  }, [appleSign, onLogin]);
+  }, [appleSign, dispatch, onLogin]);
   const onGoogleSign = useCallback(async () => {
     try {
       Loading.show();

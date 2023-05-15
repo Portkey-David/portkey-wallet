@@ -23,6 +23,7 @@ const initialState: WalletState = {
   walletName: 'Wallet 01',
   currentNetwork: 'MAIN',
   chainList: [],
+  userId: '',
 };
 export const walletSlice = createSlice({
   name: 'wallet',
@@ -30,6 +31,9 @@ export const walletSlice = createSlice({
   reducers: {
     changeNetworkType: (state, action: PayloadAction<NetworkType>) => {
       state.currentNetwork = action.payload;
+    },
+    setUserId: (state, action: PayloadAction<string>) => {
+      state.userId = action.payload;
     },
   },
   extraReducers: builder => {
@@ -107,3 +111,5 @@ export const walletSlice = createSlice({
       });
   },
 });
+
+export const { setUserId } = walletSlice.actions;

@@ -59,22 +59,22 @@ const Card: React.FC = () => {
       <Text style={styles.usdtBalance}>{isMainnet ? `$${accountBalanceUSD}` : 'Dev Mode'}</Text>
       <TextM style={styles.accountName}>{walletName}</TextM>
       <View style={styles.buttonGroupWrap}>
-        {isMainnet && isShowBuy && (
+        {/* {isMainnet && isShowBuy && (
           <>
             <BuyButton themeType="dashBoard" />
             <View style={styles.spacerStyle} />
           </>
-        )}
+        )} */}
         <SendButton themeType="dashBoard" />
         <View style={styles.spacerStyle} />
         <ReceiveButton themeType="dashBoard" />
         <View style={styles.spacerStyle} />
-        {!isMainnet && (
+        {/* {!isMainnet && (
           <>
             <FaucetButton themeType="dashBoard" />
             <View style={styles.spacerStyle} />
           </>
-        )}
+        )} */}
         <ActivityButton themeType="dashBoard" />
       </View>
     </View>
